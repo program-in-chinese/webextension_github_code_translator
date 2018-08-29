@@ -43,13 +43,13 @@ function 翻译() {
   var 原代码拷贝 = document.getElementsByTagName('table')[0];
   var span字段列表 = 原代码拷贝.getElementsByTagName('span');
   翻译字段列表(span字段列表);
-  var 文本字段列表 = textNodesUnder(document);
+  var 文本字段列表 = 取子文本节点(document);
   翻译字段列表(文本字段列表);
 }
 
-function textNodesUnder(el){
-  var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
-  while(n=walk.nextNode()) a.push(n);
+function 取子文本节点(el) {
+  var n, a = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+  while (n = walk.nextNode()) a.push(n);
   return a;
 }
 
@@ -72,7 +72,6 @@ function 取字段中最长句(字段) {
 
 function 翻译字段列表(字段列表) {
   for (var i = 0; i < 字段列表.length; i++) {
-
     var 字段 = 字段列表[i].textContent;
     var 所有单词 = 取字段中所有词(字段);
     var 所有单词有翻译 = false;
@@ -94,8 +93,6 @@ function 翻译字段列表(字段列表) {
     } else {
       var 句 = 取字段中最长句(字段);
       var 对应中文 = 语句翻译[句.toLowerCase()]
-      console.log(句);
-      console.log(对应中文);
       if (对应中文) {
         字段列表[i].textContent = 字段.replace(句, 对应中文);
       }
@@ -103,21 +100,18 @@ function 翻译字段列表(字段列表) {
   }
 }
 
-  function modifyDOM() {
-      //You can play with your DOM here or check URL against your regex
-      console.log('Tab script:');
-      var 代码段节点 = document.body.getElementsByTagName('table')[0].outerHTML
-      console.log(代码段节点);
-      return [代码段节点];
-  }
+function 获取代码段() {
+  //You can play with your DOM here or check URL against your regex
+  var 代码段节点 = document.body.getElementsByTagName('table')[0].outerHTML
+  console.log(代码段节点);
+  return [代码段节点];
+}
 
-  //We have permission to access the activeTab, so we can call chrome.tabs.executeScript:
-  chrome.tabs.executeScript({
-      code: '(' + modifyDOM + ')();' //argument here is a string but function.toString() returns function's code
-  }, (results) => {
-      //Here we have just the innerHTML and not DOM structure
-      console.log('Popup script:')
-      console.log(results[0]);
-      document.body.innerHTML = results[0];
-      翻译();
-  });
+// 需允许访问activeTab, 才能调用chrome.tabs.executeScript:
+chrome.tabs.executeScript({
+  code: '(' + 获取代码段 + ')();' //function.toString()会返回函数内容
+}, (结果) => {
+  // 仅有代码段的HTML码, 非DOM结构
+  document.body.innerHTML = 结果[0];
+  翻译();
+});
