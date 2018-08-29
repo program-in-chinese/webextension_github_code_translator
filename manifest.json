@@ -5,7 +5,7 @@
   "version": "0.0.1",
 
   "description": "工具栏按钮, 弹窗为github代码的翻译",
-  "homepage_url": "https://github.com/nobodxbodon/github_code_translator",
+  "homepage_url": "https://github.com/program-in-chinese/webextension_github_code_translator",
 
   "permissions": [
     "activeTab",
