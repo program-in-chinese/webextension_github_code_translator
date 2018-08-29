@@ -27,6 +27,18 @@ var 命名词典 = {
   'olditem': '第一项'
 }
 
+// 这里使用有道在线翻译结果. TODO: 用翻译API代替
+var 语句翻译 = {
+  'this is my shopping list': '这是我的购物单',
+  'i have': '我有',
+  'items to purchase': '要购买的产品',
+  'i also have to buy rice': '我还得买大米',
+  'my shopping list is now': '我的购物单现在在',
+  'i will sort my list now': '我现在就整理我的清单',
+  'sorted shopping list is': '排序的购物清单是',
+  'the first item i will buy is': '我要买的第一件东西是'
+}
+
 function 翻译() {
   var 原代码拷贝 = document.getElementsByTagName('table')[0];
   var span字段列表 = 原代码拷贝.getElementsByTagName('span');
@@ -50,6 +62,14 @@ function 取字段中所有词(字段) {
   return [字段];
 }
 
+function 取字段中最长句(字段) {
+  var 句 = 字段.match(/[a-zA-Z\s]+/g);
+  if (句 && 句.length > 0) {
+    return 句[0].trim();
+  }
+  return 字段;
+}
+
 function 翻译字段列表(字段列表) {
   for (var i = 0; i < 字段列表.length; i++) {
 
@@ -68,11 +88,17 @@ function 翻译字段列表(字段列表) {
       }
       字段 = 字段.replace(单词, 对应中文词);
     }
-    console.log(字段);
-    console.log(所有单词有翻译);
     // 取巧: 仅当字段中所有词有翻译时才替换字段, 避免某些文本中出现个别可识别的单词. 今后需进行语法分析.
     if (所有单词有翻译) {
       字段列表[i].textContent = 字段;
+    } else {
+      var 句 = 取字段中最长句(字段);
+      var 对应中文 = 语句翻译[句.toLowerCase()]
+      console.log(句);
+      console.log(对应中文);
+      if (对应中文) {
+        字段列表[i].textContent = 字段.replace(句, 对应中文);
+      }
     }
   }
 }
