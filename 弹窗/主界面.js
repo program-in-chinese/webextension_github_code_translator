@@ -116,7 +116,5 @@ chrome.tabs.executeScript({
 const 关键词词典文件 = '词典数据/关键词.json'
 fetch(chrome.runtime.getURL(关键词词典文件))
   .then((响应) => 响应.json())
-  .then(function (词典数据) {
-    关键词词典 = 词典数据;
-  })
+  .then((词典数据) => 关键词词典 = 词典数据)
   .then(翻译代码段);
