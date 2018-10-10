@@ -1,12 +1,7 @@
 /* 大小写敏感
 */
 
-var 关键词词典 = {
-  'for': '对于',
-  'in': '在',
-  'if': '如果',
-  'del': '删除'
-};
+var 关键词词典 = {};
 
 var API词典 = {
   'print': '打印',
@@ -108,6 +103,7 @@ function 获取代码段() {
 }
 
 // 需允许访问activeTab, 才能调用chrome.tabs.executeScript:
+function 翻译代码段() {
 chrome.tabs.executeScript({
   code: '(' + 获取代码段 + ')();' //function.toString()会返回函数内容
 }, (结果) => {
@@ -115,3 +111,12 @@ chrome.tabs.executeScript({
   document.body.innerHTML = 结果[0];
   翻译();
 });
+}
+
+const 关键词词典文件 = '词典数据/关键词.json'
+fetch(chrome.runtime.getURL(关键词词典文件))
+  .then((响应) => 响应.json())
+  .then(function (词典数据) {
+    关键词词典 = 词典数据;
+  })
+  .then(翻译代码段);

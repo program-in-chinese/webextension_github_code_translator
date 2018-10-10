@@ -15,6 +15,9 @@
   "browser_action": {
     "default_title": "代码翻译",
     "default_popup": "弹窗/主界面.html"
-  }
+  },
 
+  "web_accessible_resources": [
+    "词典数据/*.json"
+  ]
 }
