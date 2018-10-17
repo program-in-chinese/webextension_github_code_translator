@@ -1,7 +1,8 @@
 /* 尽量仅对命名进行翻译, 中间带空格的部分不翻译
 */
 
-var 关键词词典 = {};
+var 关键词词典 = 通用关键词;
+var 命名词典 = {};
 
 function 添加所有待查词(字段列表) {
   var 单词 = 取所有单词(字段列表);
@@ -17,6 +18,13 @@ function 取编程语言(顶节点) {
   }
 }
 
+function 添加专用关键词(编程语言) {
+  var 该语言关键词 = 专用关键词[编程语言];
+  for (var 关键词 in 该语言关键词) {
+    关键词词典[关键词] = 该语言关键词[关键词];
+  }
+}
+
 function 翻译() {
   var 原代码拷贝 = document.getElementsByTagName('table')[0];
   var 顶节点 = 原代码拷贝.parentElement;
@@ -24,6 +32,7 @@ function 翻译() {
   var span字段列表 = 原代码拷贝.getElementsByTagName('span');
   var 文本字段列表 = 取子文本节点(document);
 
+  添加专用关键词(编程语言);
   // 合并两个部分
   //添加所有待查词(span字段列表);
   添加所有待查词(文本字段列表);
@@ -35,7 +44,11 @@ function 翻译() {
       命名词典 = 返回值.所有释义;
       //console.log(命名词典);
       for (var 词 in 命名词典) {
-        命名词典[词] = 首选(命名词典[词], 词性);
+        if (常用命名[词]) {
+          命名词典[词] = 常用命名[词];
+        } else {
+          命名词典[词] = 首选(命名词典[词], 词性);
+        }
       }
       //console.log(命名词典);
       翻译字段列表(span字段列表);
@@ -123,8 +136,4 @@ chrome.tabs.executeScript({
 });
 }
 
-const 关键词词典文件 = '词典数据/关键词.json'
-fetch(chrome.runtime.getURL(关键词词典文件))
-  .then((响应) => 响应.json())
-  .then((词典数据) => 关键词词典 = 词典数据)
-  .then(翻译代码段);
+翻译代码段();
