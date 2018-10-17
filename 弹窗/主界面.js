@@ -54,7 +54,7 @@ function 翻译() {
       翻译字段列表(span字段列表);
       翻译字段列表(文本字段列表);
 
-      顶节点.insertBefore(document.createTextNode(编程语言), 原代码拷贝);
+      顶节点.insertBefore(document.createTextNode("编程语言: " + 编程语言), 原代码拷贝);
     }
   );
 }
