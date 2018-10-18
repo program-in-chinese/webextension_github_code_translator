@@ -13,3 +13,31 @@ QUnit.test("首选sort", function (assert) {
     "排序",
     "");
 });
+
+QUnit.test("取词_单个", function (assert) {
+  assert.deepEqual(
+    取字段中所有词("apple"),
+    ["apple"],
+    "");
+});
+
+QUnit.test("取词_带前后空格", function (assert) {
+  assert.deepEqual(
+    取字段中所有词(" apple "),
+    ["apple"],
+    "");
+});
+
+QUnit.test("取词_两个词", function (assert) {
+  assert.deepEqual(
+    取字段中所有词("apple_orange"),
+    ["apple", "orange"],
+    "");
+});
+
+QUnit.test("取词_中间带空格", function (assert) {
+  assert.deepEqual(
+    取字段中所有词("apple orange"),
+    [],
+    "");
+});

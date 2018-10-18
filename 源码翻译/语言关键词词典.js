@@ -82,3 +82,8 @@ var 专用关键词 = {
     'volatile': "volatile"
   }
 }
+
+function 取所有关键词(编程语言) {
+  var 该语言关键词 = 专用关键词[编程语言];
+  return 该语言关键词 ? Object.assign(该语言关键词, 通用关键词) : 通用关键词;
+}
