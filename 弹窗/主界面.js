@@ -4,11 +4,15 @@
 var 关键词词典 = {};
 var 命名词典 = {};
 
+var 字段中的词 = {};
+
 function 添加所有待查词(字段列表) {
   for (var i = 0; i < 字段列表.length; i++) {
-    var 字段中单词 = 取字段中所有词(字段列表[i].textContent);
-    for (var j in 字段中单词) {
-      命名词典[字段中单词[j]] = false;
+    var 字段文本 = 字段列表[i].textContent;
+    var 字段中单词 = 取字段中所有词(字段文本);
+    字段中的词[字段文本] = 字段中单词;
+    for (单词 of 字段中单词) {
+      命名词典[单词] = false;
     }
   }
 }
@@ -29,7 +33,7 @@ function 翻译() {
 
   关键词词典 = 取所有关键词(编程语言);
   // 合并两个部分
-  //添加所有待查词(span字段列表);
+  添加所有待查词(span字段列表);
   添加所有待查词(文本字段列表);
 
   chrome.runtime.sendMessage(
@@ -37,11 +41,9 @@ function 翻译() {
     命名词典,
     function(返回值) {
       命名词典 = 返回值.所有释义;
-      //console.log(命名词典);
       for (var 词 in 命名词典) {
         命名词典[词] = 常用命名[词] ? 常用命名[词] : 首选(命名词典[词], 词性);
       }
-      //console.log(命名词典);
       翻译字段列表(span字段列表);
       翻译字段列表(文本字段列表);
 
@@ -57,20 +59,18 @@ function 取子文本节点(元素) {
 }
 
 function 翻译字段列表(字段列表) {
-  for (var i = 0; i < 字段列表.length; i++) {
-    var 字段 = 字段列表[i].textContent;
+  for (字段 of 字段列表) {
+    var 字段文本 = 字段.textContent;
 
-    // TODO: 避免重复分析字段
-    var 所有单词 = 取字段中所有词(字段);
-    for (var j = 0; j < 所有单词.length; j++) {
-      var 单词 = 所有单词[j];
+    var 所有单词 = 字段中的词[字段文本];
+    for (单词 of 所有单词) {
       var 对应中文词 = 关键词词典[单词] || API词典[单词] || 命名词典[单词];
       if (对应中文词) {
-        字段 = 字段.replace(单词, 对应中文词);
+        字段文本 = 字段文本.replace(单词, 对应中文词);
       }
     }
     // TODO: 避免某些文本中出现个别可识别的单词. 今后需进行语法分析.
-    字段列表[i].textContent = 字段;
+    字段.textContent = 字段文本;
   }
 }
 
