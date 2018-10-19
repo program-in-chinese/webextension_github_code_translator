@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "GitHub代码翻译",
-  "version": "0.0.3",
+  "version": "0.0.4",
 
   "description": "工具栏按钮, 弹窗为github代码的翻译",
   "homepage_url": "https://github.com/program-in-chinese/webextension_github_code_translator",
