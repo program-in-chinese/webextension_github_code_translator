@@ -1,3 +1,7 @@
+/*
+在Chrome下运行, 不知为何在火狐中报错: invalid regexp group
+*/
+
 QUnit.test("分词性", function (assert) {
   assert.deepEqual(
     分词性("n. 种类, 方式\\nvt. 分类", 词性),
@@ -70,10 +74,16 @@ QUnit.test("拆分骆驼命名_多个单词", function (assert) {
     "");
 });
 
-// TODO: 修复
-/*QUnit.test("拆分骆驼命名_全大写单词", function (assert) {
+QUnit.test("拆分骆驼命名_全大写单词", function (assert) {
   assert.deepEqual(
     拆分骆驼命名("READING"),
     ["READING"],
     "");
-});*/
+});
+
+QUnit.test("拆分骆驼命名_部分连续大写单词", function (assert) {
+  assert.deepEqual(
+    拆分骆驼命名("HTMLElement"),
+    ["HTML", "Element"],
+    "");
+});

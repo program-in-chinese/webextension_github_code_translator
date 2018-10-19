@@ -28,5 +28,6 @@ function 取字段中最长句(字段) {
 }
 
 function 拆分骆驼命名(命名) {
-  return 命名.split(/(?=[A-Z])/);
+  // 参考: https://stackoverflow.com/a/7599674/1536803
+  return 命名.split(/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/);
 }
