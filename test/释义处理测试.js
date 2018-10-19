@@ -69,3 +69,11 @@ QUnit.test("拆分骆驼命名_多个单词", function (assert) {
     ["apple", "Orange"],
     "");
 });
+
+// TODO: 修复
+/*QUnit.test("拆分骆驼命名_全大写单词", function (assert) {
+  assert.deepEqual(
+    拆分骆驼命名("READING"),
+    ["READING"],
+    "");
+});*/
