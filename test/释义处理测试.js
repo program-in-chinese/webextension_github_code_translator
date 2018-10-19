@@ -35,9 +35,37 @@ QUnit.test("取词_两个词", function (assert) {
     "");
 });
 
+QUnit.test("取词_两个词", function (assert) {
+  assert.deepEqual(
+    取字段中所有词("appleOrange"),
+    ["apple", "Orange"],
+    "");
+});
+
+QUnit.test("取词_多个词", function (assert) {
+  assert.deepEqual(
+    取字段中所有词("apple_orangePear"),
+    ["apple", "orange", "Pear"],
+    "");
+});
+
 QUnit.test("取词_中间带空格", function (assert) {
   assert.deepEqual(
     取字段中所有词("apple orange"),
     [],
+    "");
+});
+
+QUnit.test("拆分骆驼命名_小写单词", function (assert) {
+  assert.deepEqual(
+    拆分骆驼命名("apple"),
+    ["apple"],
+    "");
+});
+
+QUnit.test("拆分骆驼命名_多个单词", function (assert) {
+  assert.deepEqual(
+    拆分骆驼命名("appleOrange"),
+    ["apple", "Orange"],
     "");
 });

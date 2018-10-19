@@ -10,7 +10,11 @@ function 取字段中所有词(字段文本) {
   }
   var 单词 = 删除前后空格.match(/[a-zA-Z]+/g);
   if (单词) {
-    return 单词;
+    var 分词 = [];
+    for (某单词 of 单词) {
+      分词 = 分词.concat(拆分骆驼命名(某单词))
+    }
+    return 分词;
   }
   return [];
 }
@@ -21,4 +25,8 @@ function 取字段中最长句(字段) {
     return 句[0].trim();
   }
   return 字段;
+}
+
+function 拆分骆驼命名(命名) {
+  return 命名.split(/(?=[A-Z])/);
 }
