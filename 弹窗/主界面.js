@@ -28,12 +28,9 @@ function 翻译() {
   var 原代码拷贝 = document.getElementsByTagName('table')[0];
   var 顶节点 = 原代码拷贝.parentElement;
   var 编程语言 = 取编程语言(顶节点);
-  var span字段列表 = 原代码拷贝.getElementsByTagName('span');
   var 文本字段列表 = 取子文本节点(document);
 
   关键词词典 = 取所有关键词(编程语言);
-  // 合并两个部分
-  添加所有待查词(span字段列表);
   添加所有待查词(文本字段列表);
 
   chrome.runtime.sendMessage(
@@ -44,7 +41,6 @@ function 翻译() {
       for (var 词 in 命名词典) {
         命名词典[词] = 常用命名[词] ? 常用命名[词] : 首选(命名词典[词], 词性);
       }
-      翻译字段列表(span字段列表);
       翻译字段列表(文本字段列表);
 
       顶节点.insertBefore(document.createTextNode("编程语言: " + 编程语言), 原代码拷贝);
@@ -78,7 +74,6 @@ function 获取代码段() {
   var 代码段节点 = document.body.getElementsByTagName('table')[0]
   // 父节点的class包含编程语言信息, 如class="blob-wrapper data type-python "
   var 代码段 = 代码段节点.parentElement.outerHTML;
-  //console.log(代码段节点);
   return [代码段];
 }
 
