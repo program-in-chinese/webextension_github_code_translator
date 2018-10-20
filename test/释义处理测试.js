@@ -15,6 +15,27 @@ QUnit.test("首选sort", function (assert) {
     "");
 });
 
+QUnit.test("首选_带中文括号", function (assert) {
+  assert.deepEqual(
+    首选("n. 小时（hour的复数形式）", 词性),
+    "小时",
+    "");
+});
+
+QUnit.test("首选_消除括号", function (assert) {
+  assert.deepEqual(
+    消除括号内容("小时（hour的复数形式）", "（", "）"),
+    "小时",
+    "");
+});
+
+QUnit.test("首选_消除括号", function (assert) {
+  assert.deepEqual(
+    消除所有括号内容("小时（hour的复数形式）"),
+    "小时",
+    "");
+});
+
 QUnit.test("取词_单个", function (assert) {
   assert.deepEqual(
     取字段中所有词("apple"),
