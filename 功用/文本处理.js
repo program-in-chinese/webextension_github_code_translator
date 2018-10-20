@@ -28,6 +28,8 @@ function 取字段中最长句(字段) {
 }
 
 function 拆分骆驼命名(命名) {
-  // 参考: https://stackoverflow.com/a/7599674/1536803
-  return 命名.split(/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/);
+  // 参考: https://stackoverflow.com/a/46409373/1536803
+  // Firefox仍不支持lookbehinds: https://stackoverflow.com/questions/49816707/firefox-invalid-regex-group
+  // 不知为何结果中有空字符串, 暂时过滤即可
+  return 命名.split(/([A-Z]+|[A-Z]?[a-z]+)(?=[A-Z]|\b)/).filter(词 => 词);
 }

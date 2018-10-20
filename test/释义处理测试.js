@@ -1,6 +1,3 @@
-/*
-在Chrome下运行, 不知为何在火狐中报错: invalid regexp group
-*/
 
 QUnit.test("分词性", function (assert) {
   assert.deepEqual(
