@@ -19,6 +19,7 @@ var 通用关键词 = {
   "else": "否则",
   "enum": "枚举",
   "extends": "扩展",
+  "extern": "外部",
   "false": "假",
   "final": "最终",
   "finally": "善后",
@@ -31,6 +32,7 @@ var 通用关键词 = {
   "implements": "实现",
   "import": "导入",
   "in": "在",
+  "include": "包括",
   "instanceof": "为实例",
   "int": "整数",
   "interface": "接口",
@@ -46,7 +48,10 @@ var 通用关键词 = {
   "public": "公有",
   "return": "返回",
   "short": "短整数",
+  "signed": "有符号",
+  "sizeof": "大小",
   "static": "静态",
+  "struct": "结构",
   "super": "父类",
   "switch": "岔",
   "synchronized": "同步",
@@ -56,6 +61,9 @@ var 通用关键词 = {
   "transient": "transient",
   "true": "真",
   "try": "尝试",
+  "typedef": "类型定义",
+  "union": "联合",
+  "unsigned": "无符号",
   "void": "无值",
   "volatile": "volatile",
   "while": "每当",
@@ -64,6 +72,11 @@ var 通用关键词 = {
 }
 
 var 专用关键词 = {
+  // https://msdn.microsoft.com/en-us/library/befeaky0.aspx
+  "c": {
+    "auto": "auto",
+    "register": "register"
+  },
   // http://php.net/manual/en/reserved.keywords.php
   "php": {
     // array()
@@ -85,7 +98,6 @@ var 专用关键词 = {
     // exit()
     "foreach": "对每个",
     "implements": "实现",
-    "include": "包括",
     "include_once": "包括_单次",
     "instanceof": "为实例",
     "insteadof": "insteadof",
