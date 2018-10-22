@@ -19,6 +19,63 @@ var 通用关键词 = {
 }
 
 var 专用关键词 = {
+  // http://php.net/manual/en/reserved.keywords.php
+  "php": {
+    "abstract": "抽象",
+    "and": "且",
+    // array()
+    "as": "as",
+    "callable": "可调用",
+    "catch": "接住",
+    "clone": "克隆",
+    "const": "const",
+    "declare": "声明",
+    "default": "默认",
+    // die()
+    "do": "执行",
+    "echo": "回响",
+    "elseif": "否则如果",
+    // empty()
+    "enddeclare": "结束声明",
+    "endfor": "结束for",
+    "endforeach": "结束foreach",
+    "endif": "结束if",
+    "endswitch": "结束switch",
+    "endwhile": "结束while",
+    // eval()
+    // exit()
+    "extends": "扩展",
+    "final": "最终",
+    "foreach": "对每个",
+    "function": "函数",
+    "global": "全局",
+    "goto": "goto",
+    "implements": "实现",
+    "include": "包括",
+    "include_once": "包括_单次",
+    'instanceof': "为实例",
+    "insteadof": "insteadof",
+    'interface': "接口",
+    // isset()
+    // list()
+    "namespace": "命名空间",
+    'new': "新",
+    'or': "或",
+    "print": "打印",
+    'private': "私有",
+    'protected': "保护",
+    'public': "公有",
+    "require": "需要",
+    "require": "需要_单次",
+    'static': "静态",
+    "trait": "trait",
+    "try": "尝试",
+    // unset()
+    "use": "use",
+    "var": "var",
+    "xor": "异或",
+    "yield": "产出"
+  },
   "javascript": {
     "abstract": "抽象",
     "arguments": "参数",
