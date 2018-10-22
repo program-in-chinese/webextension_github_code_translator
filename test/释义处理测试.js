@@ -15,6 +15,23 @@ QUnit.test("首选sort", function (assert) {
     "");
 });
 
+https://github.com/program-in-chinese/webextension_github_code_translator/issues/8
+QUnit.test("首选[计][法]", function (assert) {
+  assert.deepEqual(
+    首选(
+      "n. [计][法] 授权；授权书（authorization的复数）", 词性),
+    "授权",
+    "");
+});
+
+QUnit.test("首选[计]", function (assert) {
+  assert.deepEqual(
+    首选(
+      "n. [计]由字母或数字组成的用户名称, 以标明用户的身份", 词性),
+    "由字母或数字组成的用户名称",
+    "");
+});
+
 QUnit.test("首选_带中文括号", function (assert) {
   assert.deepEqual(
     首选("n. 小时（hour的复数形式）", 词性),
