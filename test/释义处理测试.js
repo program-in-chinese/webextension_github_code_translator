@@ -53,6 +53,13 @@ QUnit.test("首选_消除括号", function (assert) {
     "");
 });
 
+QUnit.test("取词_首字母大写", function (assert) {
+  assert.deepEqual(
+    取字段中所有词("Apple"),
+    ["Apple"],
+    "");
+});
+
 QUnit.test("取词_单个", function (assert) {
   assert.deepEqual(
     取字段中所有词("apple"),
