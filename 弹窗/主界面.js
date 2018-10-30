@@ -29,9 +29,18 @@ function 取编程语言(顶节点) {
 }
 
 function 翻译() {
-  var 原代码拷贝 = document.getElementsByTagName('table')[0];
-  var 顶节点 = 原代码拷贝.parentElement;
-  var 编程语言 = 取编程语言(顶节点);
+  // TODO: 避免与`获取代码段()`重复
+  var 编程语言 = "";
+  var 原代码拷贝 = document.body.getElementsByClassName('code');
+  var 顶节点 = null;
+  if (原代码拷贝.length == 0) {
+    原代码拷贝 = document.getElementsByTagName('table')[0];
+    顶节点 = 原代码拷贝.parentElement;
+    编程语言 = 取编程语言(顶节点);
+  } else {
+    添加CSS("https://gitee.com/assets/application-e5df8140372297eda15f23497886ffdb.css");
+    原代码拷贝 = 原代码拷贝[0];
+  }
   var 文本字段列表 = 取子文本节点(document);
 
   关键词词典 = 取所有关键词(编程语言);
@@ -49,7 +58,9 @@ function 翻译() {
       }
       翻译字段列表(文本字段列表);
 
-      顶节点.insertBefore(document.createTextNode("编程语言: " + 编程语言), 原代码拷贝);
+      if (顶节点) {
+        顶节点.insertBefore(document.createTextNode("编程语言: " + 编程语言), 原代码拷贝);
+      }
     }
   );
 }
@@ -83,11 +94,25 @@ function 翻译字段列表(字段列表) {
   }
 }
 
+function 添加CSS(链接) {
+  var fileref = document.createElement("link");
+  fileref.rel = "stylesheet";
+  fileref.type = "text/css";
+  fileref.href = 链接;
+  document.getElementsByTagName("head")[0].appendChild(fileref);
+}
+
 function 获取代码段() {
-  var 代码段节点 = document.body.getElementsByTagName('table')[0]
-  // 父节点的class包含编程语言信息, 如class="blob-wrapper data type-python "
-  var 代码段 = 代码段节点.parentElement.outerHTML;
-  return [代码段];
+  var 当前域名 = window.location.host;
+  // 默认, 适用于GitHub
+  var 代码段节点 = document.body.getElementsByTagName('table')[0];
+
+  if (当前域名 == "gitee.com") {
+    代码段节点 = document.body.getElementsByClassName('code')[0]
+  }
+  
+  // GitHub: 父节点的class包含编程语言信息, 如class="blob-wrapper data type-python "
+  return [代码段节点.parentElement.outerHTML];
 }
 
 // 需允许访问activeTab, 才能调用chrome.tabs.executeScript:
