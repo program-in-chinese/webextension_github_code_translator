@@ -40,10 +40,12 @@ function 翻译() {
   chrome.runtime.sendMessage(
     "ndifefelacmidghjaehmhicbchbidhpe",
     命名词典,
-    function(返回值) {
+    function (返回值) {
       命名词典 = 返回值.所有释义;
       for (var 词 in 命名词典) {
-        命名词典[词] = 常用命名[词] ? 常用命名[词] : 首选(命名词典[词], 词性);
+        命名词典[词] = 常用命名[词]
+          ? { "中文": 常用命名[词] }
+          : { "中文": 首选(命名词典[词].中文, 词性), "词形": 命名词典[词].词形 };
       }
       翻译字段列表(文本字段列表);
 
@@ -70,7 +72,8 @@ function 翻译字段列表(字段列表) {
       if (处理后词 != 单词.toUpperCase()) {
         处理后词 = 单词.toLowerCase();
       }
-      var 对应中文词 = 关键词词典[处理后词] || API词典[处理后词] || 命名词典[处理后词];
+      // TODO: https://github.com/program-in-chinese/webextension_github_code_translator/issues/12
+      var 对应中文词 = 关键词词典[处理后词] || API词典[处理后词] || 命名词典[处理后词].中文;
       if (对应中文词) {
         字段文本 = 字段文本.replace(单词, 对应中文词);
       }
@@ -89,13 +92,13 @@ function 获取代码段() {
 
 // 需允许访问activeTab, 才能调用chrome.tabs.executeScript:
 function 翻译代码段() {
-chrome.tabs.executeScript({
-  code: '(' + 获取代码段 + ')();'
-}, (结果) => {
-  // 仅有代码段的HTML码, 非DOM结构
-  document.body.innerHTML = 结果[0];
-  翻译();
-});
+  chrome.tabs.executeScript({
+    code: '(' + 获取代码段 + ')();'
+  }, (结果) => {
+    // 仅有代码段的HTML码, 非DOM结构
+    document.body.innerHTML = 结果[0];
+    翻译();
+  });
 }
 
 翻译代码段();
