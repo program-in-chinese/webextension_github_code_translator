@@ -51,16 +51,39 @@ function 翻译() {
     命名词典,
     function (返回值) {
       命名词典 = 返回值.所有释义;
+
+      var 追查原词 = {};
       for (var 词 in 命名词典) {
+
+        // TODO: 将词->原词缓冲到表, 避免翻译时重复检验是否有原型
+        for (某词形 of 命名词典[词].词形) {
+          if (某词形.类型 == "原型") {
+            追查原词[某词形.变化] = false;
+          }
+        }
+
         命名词典[词] = 常用命名[词]
           ? { "中文": 常用命名[词] }
           : { "中文": 首选(命名词典[词].中文, 词性), "词形": 命名词典[词].词形 };
       }
-      翻译字段列表(文本字段列表);
 
-      if (顶节点) {
-        顶节点.insertBefore(document.createTextNode("编程语言: " + 编程语言), 原代码拷贝);
-      }
+      // TODO: 重构, 避免重复嵌套
+      chrome.runtime.sendMessage(
+        "ndifefelacmidghjaehmhicbchbidhpe",
+        追查原词,
+        function (返回值) {
+          追查原词 = 返回值.所有释义;
+          for (var 词 in 追查原词) {
+            命名词典[词] = 常用命名[词]
+              ? { "中文": 常用命名[词] }
+              : { "中文": 首选(追查原词[词].中文, 词性), "词形": 追查原词[词].词形 };
+          }
+          翻译字段列表(文本字段列表);
+
+          if (顶节点) {
+            顶节点.insertBefore(document.createTextNode("编程语言: " + 编程语言), 原代码拷贝);
+          }
+        });
     }
   );
 }
@@ -87,7 +110,7 @@ function 翻译字段列表(字段列表) {
         continue;
       }
       // TODO: https://github.com/program-in-chinese/webextension_github_code_translator/issues/12
-      var 对应中文词 = 关键词词典[处理后词] || API词典[处理后词] || 命名词典[处理后词].中文;
+      var 对应中文词 = 关键词词典[处理后词] || API词典[处理后词] || 从外部词典查词(处理后词);
       if (对应中文词) {
         字段文本 = 字段文本.replace(单词, 对应中文词);
       }
@@ -95,6 +118,17 @@ function 翻译字段列表(字段列表) {
     // TODO: 避免某些文本中出现个别可识别的单词. 今后需进行语法分析.
     字段.textContent = 字段文本;
   }
+}
+
+function 从外部词典查词(词) {
+  if (命名词典[词].词形) {
+    for (某词形 of 命名词典[词].词形) {
+      if (某词形.类型 == "原型") {
+        return 命名词典[某词形.变化].中文;
+      }
+    }
+  }
+  return 命名词典[词].中文;
 }
 
 function 添加CSS(链接) {
