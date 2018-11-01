@@ -1,7 +1,6 @@
 /* 尽量仅对命名进行翻译, 中间带空格的部分不翻译
 */
 
-var 关键词词典 = {};
 var 命名词典 = {};
 
 var 字段中的词 = {};
@@ -21,29 +20,21 @@ function 添加所有待查词(字段列表) {
   }
 }
 
-function 取编程语言(顶节点) {
-  var 节点类型 = 顶节点.classList;
-  if (节点类型.length == 3 && 节点类型[2].indexOf('type-') == 0) {
-    return 节点类型[2].substring(5);
-  }
-}
-
-function 翻译() {
+function 翻译(当前域名) {
   // TODO: 避免与`获取代码段()`重复
   var 编程语言 = "";
-  var 原代码拷贝 = document.body.getElementsByClassName('code');
+  var 原代码拷贝 = null;
   var 顶节点 = null;
-  if (原代码拷贝.length == 0) {
+  if (为码云页面(当前域名)) {
+    原代码拷贝 = document.body.getElementsByClassName('code')[0];
+  } else {
     原代码拷贝 = document.getElementsByTagName('table')[0];
     顶节点 = 原代码拷贝.parentElement;
     编程语言 = 取编程语言(顶节点);
-  } else {
-    添加CSS("https://gitee.com/assets/application-e5df8140372297eda15f23497886ffdb.css");
-    原代码拷贝 = 原代码拷贝[0];
   }
   var 文本字段列表 = 取子文本节点(document);
 
-  关键词词典 = 取所有关键词(编程语言);
+  var 关键词词典 = 取所有关键词(编程语言);
   添加所有待查词(文本字段列表);
 
   chrome.runtime.sendMessage(
@@ -78,7 +69,7 @@ function 翻译() {
               ? { "中文": 常用命名[词] }
               : { "中文": 首选(追查原词[词].中文, 词性), "词形": 追查原词[词].词形 };
           }
-          翻译字段列表(文本字段列表);
+          翻译字段列表(文本字段列表, 关键词词典);
 
           if (顶节点) {
             顶节点.insertBefore(document.createTextNode("编程语言: " + 编程语言), 原代码拷贝);
@@ -88,13 +79,7 @@ function 翻译() {
   );
 }
 
-function 取子文本节点(元素) {
-  var 节点, 所有节点 = [], 遍历 = document.createTreeWalker(元素, NodeFilter.SHOW_TEXT, null, false);
-  while (节点 = 遍历.nextNode()) 所有节点.push(节点);
-  return 所有节点;
-}
-
-function 翻译字段列表(字段列表) {
+function 翻译字段列表(字段列表, 关键词词典) {
   for (字段 of 字段列表) {
     var 字段文本 = 字段.textContent;
 
@@ -131,25 +116,15 @@ function 从外部词典查词(词) {
   return 命名词典[词].中文;
 }
 
-function 添加CSS(链接) {
-  var fileref = document.createElement("link");
-  fileref.rel = "stylesheet";
-  fileref.type = "text/css";
-  fileref.href = 链接;
-  document.getElementsByTagName("head")[0].appendChild(fileref);
-}
-
 function 获取代码段() {
   var 当前域名 = window.location.host;
-  // 默认, 适用于GitHub
-  var 代码段节点 = document.body.getElementsByTagName('table')[0];
+  console.log(当前域名);
+  var 代码段节点 = 当前域名 == "gitee.com"
+    ? document.body.getElementsByClassName('code')[0]
+    : document.body.getElementsByTagName('table')[0]; // 默认, 适用于GitHub
 
-  if (当前域名 == "gitee.com") {
-    代码段节点 = document.body.getElementsByClassName('code')[0]
-  }
-  
   // GitHub: 父节点的class包含编程语言信息, 如class="blob-wrapper data type-python "
-  return [代码段节点.parentElement.outerHTML];
+  return [当前域名, 代码段节点.parentElement.outerHTML];
 }
 
 // 需允许访问activeTab, 才能调用chrome.tabs.executeScript:
@@ -158,8 +133,12 @@ function 翻译代码段() {
     code: '(' + 获取代码段 + ')();'
   }, (结果) => {
     // 仅有代码段的HTML码, 非DOM结构
-    document.body.innerHTML = 结果[0];
-    翻译();
+    var 当前域名 = 结果[0][0];
+    if (为码云页面(当前域名)) {
+      添加CSS(码云css);
+    }
+    document.body.innerHTML = 结果[0][1];
+    翻译(当前域名);
   });
 }
 
