@@ -72,38 +72,40 @@ function 翻译(当前域名) {
           翻译字段列表(文本字段列表, 关键词词典);
 
           if (顶节点) {
-            顶节点.insertBefore(document.createTextNode("编程语言: " + 编程语言), 原代码拷贝);
+            顶节点.appendChild(document.createTextNode("编程语言: " + 编程语言), 原代码拷贝);
           }
         });
     }
   );
 }
 
+function 翻译字段(字段文本, 关键词词典) {
+  var 所有单词 = 字段中的词[字段文本];
+  for (单词 of 所有单词) {
+    var 处理后词 = 单词;
+
+    // TODO: 避免两次处理大小写
+    if (处理后词 != 单词.toUpperCase()) {
+      处理后词 = 单词.toLowerCase();
+    }
+    if (处理后词 in 不翻译) {
+      continue;
+    }
+    var 对应中文词 = 关键词词典[处理后词]
+      || API词典[处理后词]
+      || 命名词典[取复数原型(处理后词)].中文;
+    if (对应中文词) {
+      字段文本 = 字段文本.replace(单词, 对应中文词);
+    }
+  }
+  return 字段文本;
+}
+
 function 翻译字段列表(字段列表, 关键词词典) {
   for (字段 of 字段列表) {
-    var 字段文本 = 字段.textContent;
 
-    var 所有单词 = 字段中的词[字段文本];
-    for (单词 of 所有单词) {
-      var 处理后词 = 单词;
-
-      // TODO: 避免两次处理大小写
-      if (处理后词 != 单词.toUpperCase()) {
-        处理后词 = 单词.toLowerCase();
-      }
-      if (处理后词 in 不翻译) {
-        continue;
-      }
-      // TODO: https://github.com/program-in-chinese/webextension_github_code_translator/issues/12
-      var 对应中文词 = 关键词词典[处理后词]
-        || API词典[处理后词]
-        || 命名词典[取复数原型(处理后词)].中文;
-      if (对应中文词) {
-        字段文本 = 字段文本.replace(单词, 对应中文词);
-      }
-    }
     // TODO: 避免某些文本中出现个别可识别的单词. 今后需进行语法分析.
-    字段.textContent = 字段文本;
+    字段.textContent = 翻译字段(字段.textContent, 关键词词典);
   }
 }
 
