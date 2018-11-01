@@ -83,6 +83,9 @@ function 翻译字段列表(字段列表) {
       if (处理后词 != 单词.toUpperCase()) {
         处理后词 = 单词.toLowerCase();
       }
+      if (处理后词 in 不翻译) {
+        continue;
+      }
       // TODO: https://github.com/program-in-chinese/webextension_github_code_translator/issues/12
       var 对应中文词 = 关键词词典[处理后词] || API词典[处理后词] || 命名词典[处理后词].中文;
       if (对应中文词) {
