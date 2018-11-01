@@ -95,7 +95,9 @@ function 翻译字段列表(字段列表, 关键词词典) {
         continue;
       }
       // TODO: https://github.com/program-in-chinese/webextension_github_code_translator/issues/12
-      var 对应中文词 = 关键词词典[处理后词] || API词典[处理后词] || 从外部词典查词(处理后词);
+      var 对应中文词 = 关键词词典[处理后词]
+        || API词典[处理后词]
+        || 命名词典[取复数原型(处理后词)].中文;
       if (对应中文词) {
         字段文本 = 字段文本.replace(单词, 对应中文词);
       }
@@ -103,17 +105,6 @@ function 翻译字段列表(字段列表, 关键词词典) {
     // TODO: 避免某些文本中出现个别可识别的单词. 今后需进行语法分析.
     字段.textContent = 字段文本;
   }
-}
-
-function 从外部词典查词(词) {
-  if (命名词典[词].词形) {
-    for (某词形 of 命名词典[词].词形) {
-      if (某词形.类型 == "原型") {
-        return 命名词典[某词形.变化].中文;
-      }
-    }
-  }
-  return 命名词典[词].中文;
 }
 
 function 获取代码段() {
