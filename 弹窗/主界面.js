@@ -69,7 +69,12 @@ function 翻译(当前域名) {
               ? { "中文": 常用命名[词] }
               : { "中文": 首选(追查原词[词].中文, 词性), "词形": 追查原词[词].词形 };
           }
-          翻译字段列表(文本字段列表, 关键词词典);
+
+          chrome.storage.sync.get({
+            翻译关键词: false
+          }, function(结果) {
+            翻译字段列表(文本字段列表, 关键词词典, 结果.翻译关键词);
+          });
 
           if (顶节点) {
             顶节点.appendChild(document.createTextNode("编程语言: " + 编程语言), 原代码拷贝);
@@ -101,9 +106,12 @@ function 翻译字段(字段文本, 关键词词典) {
   return 字段文本;
 }
 
-function 翻译字段列表(字段列表, 关键词词典) {
+function 翻译字段列表(字段列表, 关键词词典, 翻译关键词) {
   for (字段 of 字段列表) {
 
+    if (!翻译关键词 && 为关键词或核心API节点(字段.parentElement)) {
+      continue;
+    }
     // TODO: 避免某些文本中出现个别可识别的单词. 今后需进行语法分析.
     字段.textContent = 翻译字段(字段.textContent, 关键词词典);
   }
@@ -111,7 +119,8 @@ function 翻译字段列表(字段列表, 关键词词典) {
 
 function 获取代码段() {
   var 当前域名 = window.location.host;
-  console.log(当前域名);
+  
+  // TODO: 改为querySelector
   var 代码段节点 = 当前域名 == "gitee.com"
     ? document.body.getElementsByClassName('code')[0]
     : document.body.getElementsByTagName('table')[0]; // 默认, 适用于GitHub

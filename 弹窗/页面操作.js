@@ -26,3 +26,7 @@ function 取编程语言(顶节点) {
 function 为码云页面(当前域名) {
   return 当前域名 == "gitee.com";
 }
+
+function 为关键词或核心API节点(节点) {
+  return 节点.tagName == "SPAN" && 节点.className == "pl-k";
+}
