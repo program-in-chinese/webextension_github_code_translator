@@ -1,6 +1,6 @@
 /* 尽量仅对命名进行翻译, 中间带空格的部分不翻译
 */
-
+var 词典插件链接 = "https://chrome.google.com/webstore/detail/%E7%A6%BB%E7%BA%BF%E8%8B%B1%E6%B1%89%E8%AF%8D%E5%85%B8/ndifefelacmidghjaehmhicbchbidhpe";
 var 命名词典 = {};
 
 var 字段中的词 = {};
@@ -27,6 +27,7 @@ function 翻译(当前域名) {
   var 顶节点 = null;
   if (为码云页面(当前域名)) {
     原代码拷贝 = document.body.getElementsByClassName('code')[0];
+    顶节点 = document.body;
   } else {
     原代码拷贝 = document.getElementsByTagName('table')[0];
     顶节点 = 原代码拷贝.parentElement;
@@ -41,6 +42,13 @@ function 翻译(当前域名) {
     "ndifefelacmidghjaehmhicbchbidhpe",
     命名词典,
     function (返回值) {
+      if (!返回值) {
+        顶节点.insertBefore(添加链接元素("离线英汉词典插件", 词典插件链接), 顶节点.firstChild);
+        var 文本元素 = document.createElement('span');
+        文本元素.style.fontSize = "20px";
+        文本元素.textContent = "如果翻译失败, 请先安装";
+        顶节点.insertBefore(文本元素, 顶节点.firstChild);
+      }
       命名词典 = 返回值.所有释义;
 
       var 追查原词 = {};
@@ -76,7 +84,7 @@ function 翻译(当前域名) {
             翻译字段列表(文本字段列表, 关键词词典, 结果.翻译关键词, 当前域名);
           });
 
-          if (顶节点) {
+          if (!为码云页面(当前域名)) {
             顶节点.appendChild(document.createTextNode("编程语言: " + 编程语言), 原代码拷贝);
           }
         });
