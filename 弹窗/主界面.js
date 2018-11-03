@@ -48,6 +48,7 @@ function 翻译(当前域名) {
         文本元素.style.fontSize = "20px";
         文本元素.textContent = "如果翻译失败, 请先安装";
         顶节点.insertBefore(文本元素, 顶节点.firstChild);
+        return;
       }
       命名词典 = 返回值.所有释义;
 
