@@ -5,6 +5,8 @@ var 命名词典 = {};
 
 var 字段中的词 = {};
 
+var 词典接口 = chrome.extension.getBackgroundPage();
+
 function 添加所有待查词(字段列表) {
   for (var i = 0; i < 字段列表.length; i++) {
     var 字段文本 = 字段列表[i].textContent;
@@ -38,19 +40,32 @@ function 翻译(当前域名) {
   var 关键词词典 = 取所有关键词(编程语言);
   添加所有待查词(文本字段列表);
 
+  var 不在本地词汇 = [];
+  for (var 英文词 in 命名词典) {
+    var 词条 = 词典接口.查词(英文词);
+    if (!词条.中文 && !(英文词 in 常用命名) && !(英文词 in 关键词词典) && !(英文词 in API词典)) {
+      不在本地词汇.push(英文词);
+    }
+    命名词典[英文词] = 词条;
+  }
+  不在本地词汇.sort(function (a, b) { return b.length - a.length });
+
+  // TODO: 如果本地词库已满足查询, 不再查询外部词库
   chrome.runtime.sendMessage(
     "ndifefelacmidghjaehmhicbchbidhpe",
     命名词典,
     function (返回值) {
-      if (!返回值) {
+      if (!返回值 && 不在本地词汇.length > 0) {
         顶节点.insertBefore(添加链接元素("离线英汉词典插件", 词典插件链接), 顶节点.firstChild);
         var 文本元素 = document.createElement('span');
-        文本元素.style.fontSize = "20px";
-        文本元素.textContent = "如果翻译失败, 请先安装";
+        文本元素.style.fontSize = "18px";
+        文本元素.textContent = "未找到"
+          + (不在本地词汇.length > 3 ? 不在本地词汇.slice(0, 3) + "等" : 不在本地词汇)
+          + 不在本地词汇.length + "个词, 为更佳效果请安装77万词条的";
         顶节点.insertBefore(文本元素, 顶节点.firstChild);
-        return;
+      } else {
+        命名词典 = 返回值.所有释义;
       }
-      命名词典 = 返回值.所有释义;
 
       var 追查原词 = {};
       for (var 词 in 命名词典) {
@@ -68,15 +83,18 @@ function 翻译(当前域名) {
       }
 
       // TODO: 重构, 避免重复嵌套
+      // 假设牛津三千词中都是原型词汇, 加入之前未查到, 原词也查不到; 如果之前都查到了, 原词不需再查.
       chrome.runtime.sendMessage(
         "ndifefelacmidghjaehmhicbchbidhpe",
         追查原词,
         function (返回值) {
-          追查原词 = 返回值.所有释义;
-          for (var 词 in 追查原词) {
-            命名词典[词] = 常用命名[词]
-              ? { "中文": 常用命名[词] }
-              : { "中文": 首选(追查原词[词].中文, 词性), "词形": 追查原词[词].词形 };
+          if (返回值) {
+            追查原词 = 返回值.所有释义;
+            for (var 词 in 追查原词) {
+              命名词典[词] = 常用命名[词]
+                ? { "中文": 常用命名[词] }
+                : { "中文": 首选(追查原词[词].中文, 词性), "词形": 追查原词[词].词形 };
+            }
           }
 
           chrome.storage.sync.get({
