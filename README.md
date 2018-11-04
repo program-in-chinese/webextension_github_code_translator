@@ -2,6 +2,12 @@
 
 在任何GitHub的源码网页([例如](https://github.com/shekhargulati/java8-the-missing-tutorial/blob/master/code/src/main/java/com/shekhargulati/java8_tutorial/ch01/BasicCalculator.java))或码云源码网页([例如](https://gitee.com/didispace/SpringBoot-Learning/blob/master/Chapter3-1-1/src/main/java/com/didispace/domain/User.java)), 点击工具栏按钮后, 弹窗中显示将源码的命名进行翻译后的对应代码段.
 
+0.0.14
+- 添加基本词库(三千左右), 以避免单独安装无法进行任何翻译的情况. 改进提示信息
+
+0.0.12 & 0.0.13
+- 如果翻译失败, 提示用户需安装离线英汉词典插件
+
 0.0.11
 - 提供用户选项是否翻译关键词和核心API, 默认不翻译
 
