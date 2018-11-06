@@ -28,7 +28,7 @@ function 翻译(当前域名) {
   var 原代码拷贝 = null;
   var 顶节点 = null;
   if (为码云页面(当前域名)) {
-    原代码拷贝 = document.body.getElementsByClassName('code')[0];
+    原代码拷贝 = document.body.getElementsByClassName('file_content')[0];
     顶节点 = document.body;
   } else {
     原代码拷贝 = document.getElementsByTagName('table')[0];
@@ -149,7 +149,7 @@ function 获取代码段() {
   
   // TODO: 改为querySelector
   var 代码段节点 = 当前域名 == "gitee.com"
-    ? document.body.getElementsByClassName('code')[0]
+    ? document.body.getElementsByClassName('file_content')[0]
     : document.body.getElementsByTagName('table')[0]; // 默认, 适用于GitHub
 
   // GitHub: 父节点的class包含编程语言信息, 如class="blob-wrapper data type-python "
