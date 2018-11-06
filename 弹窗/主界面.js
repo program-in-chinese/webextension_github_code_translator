@@ -1,6 +1,7 @@
 /* 尽量仅对命名进行翻译, 中间带空格的部分不翻译
 */
-var 词典插件链接 = "https://chrome.google.com/webstore/detail/%E7%A6%BB%E7%BA%BF%E8%8B%B1%E6%B1%89%E8%AF%8D%E5%85%B8/ndifefelacmidghjaehmhicbchbidhpe";
+var 词典插件链接 = "https://addons.mozilla.org/zh-CN/firefox/addon/%E7%A6%BB%E7%BA%BF%E8%8B%B1%E6%B1%89%E8%AF%8D%E5%85%B8/";
+var 离线英汉词典插件ID = "{ec1a2aa5-f416-4a31-91bd-cd154eed102a}"
 var 命名词典 = {};
 
 var 字段中的词 = {};
@@ -52,7 +53,7 @@ function 翻译(当前域名) {
 
   // TODO: 如果本地词库已满足查询, 不再查询外部词库
   chrome.runtime.sendMessage(
-    "ndifefelacmidghjaehmhicbchbidhpe",
+    离线英汉词典插件ID,
     命名词典,
     function (返回值) {
       if (!返回值 && 不在本地词汇.length > 0) {
@@ -85,7 +86,7 @@ function 翻译(当前域名) {
       // TODO: 重构, 避免重复嵌套
       // 假设牛津三千词中都是原型词汇, 加入之前未查到, 原词也查不到; 如果之前都查到了, 原词不需再查.
       chrome.runtime.sendMessage(
-        "ndifefelacmidghjaehmhicbchbidhpe",
+        离线英汉词典插件ID,
         追查原词,
         function (返回值) {
           if (返回值) {
