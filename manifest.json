@@ -18,7 +18,10 @@
   "background": {
     "scripts": ["加载词典.js", "查词.js"]
   },
-  "options_page": "选项/选项.html",
+  "options_ui": {
+    "page": "选项/选项.html",
+    "browser_style": true
+  },
   "browser_action": {
     "default_icon": {
       "32": "图标/项目_32.png"
