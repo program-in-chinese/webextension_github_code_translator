@@ -25,5 +25,10 @@
     },
     "default_title": "代码翻译",
     "default_popup": "弹窗/主界面.html"
+  },
+  "applications": {
+    "gecko": {
+      "id": "webextension_online_code_translator@codeinchinese.com"
+    }
   }
 }
