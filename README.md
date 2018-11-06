@@ -1,4 +1,7 @@
-#### 注意: 需先安装[离线英汉词典插件](https://chrome.google.com/webstore/detail/%E7%A6%BB%E7%BA%BF%E8%8B%B1%E6%B1%89%E8%AF%8D%E5%85%B8/ndifefelacmidghjaehmhicbchbidhpe?hl=en), 否则翻译无法完成!
+[火狐插件地址](https://addons.mozilla.org/zh-CN/developers/addon/%E4%B8%80%E9%A9%AC-%E5%9C%A8%E7%BA%BF%E4%BB%A3%E7%A0%81%E7%BF%BB%E8%AF%91/edit)
+[Chrome插件地址](https://chrome.google.com/webstore/detail/%E4%B8%80%E9%A9%AC-%E5%9C%A8%E7%BA%BF%E4%BB%A3%E7%A0%81%E7%BF%BB%E8%AF%91/inicknfojohdbgekdffgcdfiheflpnbh)
+
+#### 注意: 插件内置词库仅有三千最常用词. 为保证翻译效果, 请安装包含77万词条的离线英汉词典插件 [火狐版](https://addons.mozilla.org/zh-CN/firefox/addon/%E7%A6%BB%E7%BA%BF%E8%8B%B1%E6%B1%89%E8%AF%8D%E5%85%B8/) [Chrome版](https://chrome.google.com/webstore/detail/%E7%A6%BB%E7%BA%BF%E8%8B%B1%E6%B1%89%E8%AF%8D%E5%85%B8/ndifefelacmidghjaehmhicbchbidhpe?hl=en)
 
 在任何GitHub的源码网页([例如](https://github.com/shekhargulati/java8-the-missing-tutorial/blob/master/code/src/main/java/com/shekhargulati/java8_tutorial/ch01/BasicCalculator.java))或码云源码网页([例如](https://gitee.com/didispace/SpringBoot-Learning/blob/master/Chapter3-1-1/src/main/java/com/didispace/domain/User.java)), 点击工具栏按钮后, 弹窗中显示将源码的命名进行翻译后的对应代码段.
 
