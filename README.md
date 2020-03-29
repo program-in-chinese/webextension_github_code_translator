@@ -1,4 +1,4 @@
-[火狐插件地址](https://addons.mozilla.org/zh-CN/developers/addon/%E4%B8%80%E9%A9%AC-%E5%9C%A8%E7%BA%BF%E4%BB%A3%E7%A0%81%E7%BF%BB%E8%AF%91/edit)
+[火狐插件地址](https://addons.mozilla.org/zh-CN/firefox/addon/%E4%B8%80%E9%A9%AC-%E5%9C%A8%E7%BA%BF%E4%BB%A3%E7%A0%81%E7%BF%BB%E8%AF%91/)
 [Chrome插件地址](https://chrome.google.com/webstore/detail/%E4%B8%80%E9%A9%AC-%E5%9C%A8%E7%BA%BF%E4%BB%A3%E7%A0%81%E7%BF%BB%E8%AF%91/inicknfojohdbgekdffgcdfiheflpnbh)
 
 #### 注意: 插件内置词库仅有三千最常用词. 为保证翻译效果, 请安装包含77万词条的离线英汉词典插件 [火狐版](https://addons.mozilla.org/zh-CN/firefox/addon/%E7%A6%BB%E7%BA%BF%E8%8B%B1%E6%B1%89%E8%AF%8D%E5%85%B8/) [Chrome版](https://chrome.google.com/webstore/detail/%E7%A6%BB%E7%BA%BF%E8%8B%B1%E6%B1%89%E8%AF%8D%E5%85%B8/ndifefelacmidghjaehmhicbchbidhpe?hl=en)
